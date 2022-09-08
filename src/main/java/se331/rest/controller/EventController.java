@@ -2,6 +2,7 @@ package se331.rest.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import se331.rest.entity.Event;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
@@ -72,7 +73,15 @@ public class EventController {
 
     }
     @GetMapping("event")
-    public ResponseEntity<?> getEventLists(){
+    public ResponseEntity<?> getEventLists(@RequestParam(value = "_limit",required = false) Integer perPage
+            ,@RequestParam(value ="_page", required = false) Integer page){
+        perPage = perPage == null?eventList.size():perPage;
+        page = page == null?1:page;
+        Integer firstIndex = (page-1) * perPage;
+        List<Event> output = new ArrayList<>();
+        for (int i = firstIndex; i< firstIndex + perPage; i++){
+            output.add(eventList.get(i));
+        }
         return ResponseEntity.ok(eventList);
     }
 }
