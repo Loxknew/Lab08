@@ -19,6 +19,8 @@ public class Lab08Application {
             public void addCorsMappings (CorsRegistry registry){
                 registry.addMapping("/event")
                         .allowedOrigins("http://localhost:3000");
+                registry.addMapping("/event/*")
+                        .allowedOrigins("http://localhost:3000");
             }
         };
     }
